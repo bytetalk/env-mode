@@ -36,7 +36,7 @@ function loadEnv (name) {
     return {}
   }
 }
-function setEnv (mode, debug) {
+function setNodeEnv (mode, debug) {
   debugMode = debug
   const basicEnv = loadEnv('.env')
   const modeEnv = mode ? loadEnv(`.env.${mode}`) : {}
@@ -45,12 +45,15 @@ function setEnv (mode, debug) {
     ...modeEnv,
   }
   Object.keys(env).forEach(key => {
-    if (process.env[key]) {
-      log(`key:'${key}' is already defined in process.env, new value:'${env[key]}' is ignored`)
-    } else {
+    if (process.env[key] === undefined) {
       process.env[key] = env[key]
+    } else {
+      log(`'${key}:${process.env[key]}' is already defined in process.env, new value:'${env[key]}' is ignored`)
     }
   })
+  if (process.env.NODE_ENV === undefined) {
+    process.env.NODE_ENV = mode
+  }
 }
 
-module.exports = setEnv
+module.exports = setNodeEnv

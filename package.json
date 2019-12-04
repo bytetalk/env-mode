@@ -4,11 +4,17 @@
   "description": "Set node env from .env and .env.mode",
   "main": "src/index.js",
   "bin": {
-    "set-node-env": "bin/cli.js",
-    "setnodeenv": "bin/cli.js"
+    "set-node-env": "bin/cli.js"
   },
   "scripts": {
-    "lint": "eslint --fix src bin"
+    "lint": "eslint --fix bin src test require.js",
+    "test:inline": "node test/inline",
+    "test:require:development": "node -r ./require test/require --env-mode=development --env-debug",
+    "test:require:test": "node -r ./require test/require --env-mode=test --env-debug",
+    "test:require:production": "node -r ./require test/require --env-mode=production --env-debug",
+    "test:cli:development": "node bin/cli --mode=development --debug node test/cli",
+    "test:cli:test": "node bin/cli --mode=test --debug node test/cli",
+    "test:cli:production": "node bin/cli --mode=production --debug node test/cli"
   },
   "repository": {
     "type": "git",
