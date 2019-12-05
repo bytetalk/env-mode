@@ -15,9 +15,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "comma-dangle": ['error', {
-      'arrays': 'always',
-      'objects': 'always',
-    }]
+    "comma-dangle": ['error', 'always-multiline']
   }
 }
