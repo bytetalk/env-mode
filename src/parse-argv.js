@@ -7,12 +7,12 @@ function pick (argKeyPrefix = '--') {
   rawArgs.forEach(arg => {
     let [
       key = '',
-      value = '',
-    ] = arg.split(KEY_VALUE_SEPARATOR, 2)
-    if (key.indexOf(argKeyPrefix) === 0) {
+      ...value
+    ] = arg.split(KEY_VALUE_SEPARATOR)
+    if (key.indexOf(argKeyPrefix) === 0 && rest.length === 0) {
       key = key.substring(argKeyPrefix.length)
       if (key) {
-        env[key] = value || ''
+        env[key] = value.join(KEY_VALUE_SEPARATOR) || ''
       }
     } else {
       rest.push(arg)

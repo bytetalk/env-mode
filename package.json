@@ -1,6 +1,6 @@
 {
   "name": "set-node-env",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Set node env from .env and .env.mode",
   "main": "src/index.js",
   "bin": {
@@ -31,8 +31,10 @@
     "environment",
     "env",
     "node",
-    "set"
+    "set",
+    "cli"
   ],
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",

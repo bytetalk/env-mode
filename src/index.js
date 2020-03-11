@@ -30,10 +30,10 @@ function parseEnv (name, content = '') {
   content.split(END_OF_LINE).forEach((line, index) => {
     let [
       key = '',
-      value = '',
-    ] = line.split(KEY_VALUE_SEPARATOR, 2)
+      ...value
+    ] = line.split(KEY_VALUE_SEPARATOR)
     key = key.trim()
-    value = value.trim()
+    value = value.join(KEY_VALUE_SEPARATOR).trim()
     if (key.startsWith('#')) {
       return
     }
