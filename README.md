@@ -2,13 +2,9 @@
 
 Set node env from a .env and a .env.mode file.
 
----
-
 [![Build Status](https://travis-ci.com/bytetalk/set-node-env.svg?branch=master)](https://travis-ci.com/bytetalk/set-node-env)
 
 ### Installation
-
----
 
 ```shell
 npm install --save-dev set-node-env
@@ -17,8 +13,6 @@ yarn add --dev set-node-env
 ```
 
 ### Usage Demo
-
----
 
 ##### 1. Create corresponding files under you project as below
 
@@ -108,7 +102,5 @@ Options
 ```
 
 ## LICENSE
-
----
 
 MIT
