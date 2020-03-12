@@ -1,6 +1,6 @@
 # set-node-env
 
-Set node env from a .env and a .env.mode file.
+Set node env from a .env and a .env.mode files.
 
 [![Build Status](https://travis-ci.com/bytetalk/set-node-env.svg?branch=master)](https://travis-ci.com/bytetalk/set-node-env)
 
@@ -14,7 +14,7 @@ yarn add --dev set-node-env
 
 ## Usage Demo
 
-##### 1. Create corresponding files under you project as below
+##### 1. Create corresponding files under your project root directory as below
 
 .env file
 
@@ -55,7 +55,9 @@ package.json
 "scripts": {
     "test": "set-node-env --mode=production --debug=true node app.js"
 }
+```
 
+```
 $ npm test
 $ set-node-env-demo
 $ 9999
@@ -71,15 +73,17 @@ $ 9999
 
 Both .env and .env.prodocution will take affect.
 
-##### 3. (Optional and Alternative) Run below code instead of step above
+##### 3. (Optional and Alternative) Run below code instead of step above under your project root directory
 
 ```shell
-$ node -r ./node_modules/set-node-env/require app.js --env-mode=production --env-debug=true // node -r preload the specified module at startup
+$ node -r ./node_modules/set-node-env/preload.js app.js --env-mode=production --env-debug=true // node -r preload the specified module at startup
 $ set-node-env-demo
 $ 9999
 ```
 
 ## Command Line Interface
+
+> Make sure set-env-node or node -r ./node_modules/set-node-env/preload.js command be executed under your project root directory since .env and .env.mode files were created there, that means set-node-env module code loads .env and .env.mode files under you current working directory.
 
 > 1. A .env file will always be tried to load even if it does not exist. A .env.mode file has a higher priority.
 > 2. If process.env has the key defined in .env or .env.mode files, new value will be ignored.
@@ -89,12 +93,12 @@ $ 9999
 set-node-env --mode=production --debug=true node app.js
 
 Options
-  --mode             (optional) specify mode and must create a corresponding .env.mode file
+  --mode             (optional) specify mode and must create a corresponding .env.mode file first
   --debug            (optional) show debug info or not, no specified means false, --debug means true
 ```
 
 ```shell
-node -r ./node_modules/set-node-env/require app.js --env-mode=production --env-debug=true
+node -r ./node_modules/set-node-env/preload.js app.js --env-mode=production --env-debug=true
 
 Options
   --env-mode         same as --mode
@@ -108,9 +112,9 @@ package.json
 ```json
 "scripts": {
     "node": "set-node-env --mode=production --debug=true node app.js",
-    "npm": "set-node-env --mode=production --debug=true npm env",
-    "npx": "set-node-env --mode=production --debug=true npx electron", // npm >= 5.2
-    "electron": "set-node-env --mode=production --debug=true electron ." // npm install electron or yarn add electron first
+    "electron": "set-node-env --mode=production --debug=true electron .", // install electron first
+    "npx": "set-node-env --mode=production --debug=true npx electron .", // npm >= 5.2
+    "npm": "set-node-env --mode=production --debug=true npm env"
 }
 ```
 

@@ -1,16 +1,19 @@
-const KEY_VALUE_SEPARATOR = '='
+const { KEY_VALUE_SEPARATOR } = require('./common')
 
 function pick (argKeyPrefix = '--') {
   const [, , ...rawArgs] = process.argv
   const env = {}
   const rest = []
+
   rawArgs.forEach(arg => {
     let [
       key = '',
       ...value
     ] = arg.split(KEY_VALUE_SEPARATOR)
+
     if (key.indexOf(argKeyPrefix) === 0 && rest.length === 0) {
       key = key.substring(argKeyPrefix.length)
+
       if (key) {
         env[key] = value.join(KEY_VALUE_SEPARATOR) || ''
       }
@@ -18,6 +21,7 @@ function pick (argKeyPrefix = '--') {
       rest.push(arg)
     }
   })
+
   return {
     env,
     rest,
@@ -31,6 +35,7 @@ function parse (argKeyPrefix) {
     },
     rest,
   } = pick(argKeyPrefix)
+
   if (debug) {
     if (debug === 'false') {
       debug = false
@@ -44,6 +49,7 @@ function parse (argKeyPrefix) {
       debug = false
     }
   }
+
   return {
     mode,
     debug,

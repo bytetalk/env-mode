@@ -7,14 +7,8 @@
     "set-node-env": "bin/cli.js"
   },
   "scripts": {
-    "lint": "eslint --fix bin src test require.js",
-    "test:inline": "node test/inline",
-    "test:require:development": "node -r ./require test/require --env-mode=development --env-debug",
-    "test:require:test": "node -r ./require test/require --env-mode=test --env-debug",
-    "test:require:production": "node -r ./require test/require --env-mode=production --env-debug",
-    "test:cli:development": "node bin/cli --mode=development --debug node test/cli",
-    "test:cli:test": "node bin/cli --mode=test --debug node test/cli",
-    "test:cli:production": "node bin/cli --mode=production --debug node test/cli"
+    "lint": "eslint --fix bin src test preload.js",
+    "test": "nyc mocha test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +30,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -43,7 +38,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.1.0",
-    "lint-staged": "^9.5.0"
+    "lint-staged": "^9.5.0",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0"
   },
   "dependencies": {}
 }
