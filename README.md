@@ -49,9 +49,9 @@ console.log(process.env.PORT)
 
 ##### 2. Run set-node-env command
 
-```json
 package.json
 
+```json
 "scripts": {
     "test": "set-node-env --mode=production --debug=true node app.js"
 }
@@ -74,7 +74,7 @@ Both .env and .env.prodocution will take affect.
 ##### 3. (Optional and Alternative) Run below code instead of step above
 
 ```shell
-$ node -r ./node_modules/set-node-env/require app.js --env-mode=production --env-debug=true
+$ node -r ./node_modules/set-node-env/require app.js --env-mode=production --env-debug=true // node -r preload the specified module at startup
 $ set-node-env-demo
 $ 9999
 ```
@@ -97,8 +97,21 @@ Options
 node -r ./node_modules/set-node-env/require app.js --env-mode=production --env-debug=true
 
 Options
---env-mode           same as --mode
---env-debug          same as --debug
+  --env-mode         same as --mode
+  --env-debug        same as --debug
+```
+
+## More Examples
+
+package.json
+
+```json
+"scripts": {
+    "node": "set-node-env --mode=production --debug=true node app.js",
+    "npm": "set-node-env --mode=production --debug=true npm env",
+    "npx": "set-node-env --mode=production --debug=true npx electron", // npm >= 5.2
+    "electron": "set-node-env --mode=production --debug=true electron ." // npm install electron or yarn add electron first
+}
 ```
 
 ## LICENSE

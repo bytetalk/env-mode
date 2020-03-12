@@ -15,13 +15,20 @@ const {
   rest,
 } = parse(ARG_KEY_PREFIX)
 setNodeEnv(mode, debug)
-const [command, ...args] = rest
+let [command, ...args] = rest
+if (command !== 'node' && process.platform === 'win32') {
+  command = `${command}.cmd` // npm、npx、node_modules/.bin/*
+}
 const proc = spawn(command, args)
+console.log(`> ${rest.join(' ')}`)
 proc.stdout.on('data', data => console.log(format(data)))
 proc.stderr.on('data', data => console.error(format(data)))
 proc.on('exit', (code, signal) => {
-  let message = `[set-node-env] ${rest.join(' ')} exited with code ${code}`
-  message += signal ? `and signal ${signal}` : ''
-  console.log(message)
+  if (debug) {
+    let message = `[set-node-env][debug] ${rest.join(' ')} exited with code ${code}`
+    message += signal ? `and signal ${signal}` : ''
+
+    console.log(message)
+  }
 })
 proc.on('error', error => console.error(error))
