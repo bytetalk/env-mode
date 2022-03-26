@@ -1,9 +1,7 @@
 const fs = require('fs')
 const { KEY_VALUE_SEPARATOR, END_OF_LINE, log } = require('./common')
 
-let debugMode = false
-
-function getValue (value) {
+function getEnvValue (value) {
   // https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_env
   // Assigning a property on process.env will implicitly convert the value to a string.
   // This behavior is deprecated.
@@ -22,7 +20,7 @@ function getValue (value) {
     }
   }
 }
-function parseEnv (name, content = '') {
+function parseEnvFile (name, content = '', debug) {
   const ret = {}
 
   content.split(END_OF_LINE).forEach((line, index) => {
@@ -39,48 +37,59 @@ function parseEnv (name, content = '') {
     }
 
     if (key && value) {
-      ret[key] = getValue(value)
+      ret[key] = getEnvValue(value)
     } else if (key + value) {
-      log(debugMode, `parsing ${name} line:${index + 1}, value:'${line}' is illegal format`)
+      log(debug, `parsing ${name} line:${index + 1}, value:'${line}' is illegal format`)
     }
   })
 
   return ret
 }
-function loadEnv (name) {
+function loadEnvFile (name, debug) {
   try {
     const content = fs.readFileSync(name, { // relative to process.cwd()
       encoding: 'utf-8',
     })
 
-    return parseEnv(name, content)
+    return parseEnvFile(name, content, debug)
   } catch (err) {
-    log(debugMode, err.message)
+    log(debug, err.message)
 
     return {}
   }
 }
-function setNodeEnv (mode, debug) {
-  debugMode = debug
-
-  const basicEnv = loadEnv('.env')
-  const modeEnv = mode ? loadEnv(`.env.${mode}`) : {}
-  const env = {
+function getNodeEnv (mode, debug) {
+  const basicEnv = loadEnvFile('.env', debug)
+  const modeEnv = mode ? loadEnvFile(`.env.${mode}`, debug) : {}
+  const mergedEnv = {
     ...basicEnv,
     ...modeEnv,
   }
+  const env = {}
 
-  Object.keys(env).forEach(key => {
+  Object.keys(mergedEnv).forEach(key => {
     if (process.env[key] === undefined) {
-      process.env[key] = env[key]
+      env[key] = mergedEnv[key]
     } else {
-      log(debugMode, `'${key}:${process.env[key]}' is already defined in process.env, new value:'${env[key]}' is ignored`)
+      log(debug, `'${key}:${process.env[key]}' is already defined in process.env, new value:'${mergedEnv[key]}' is ignored`)
     }
   })
 
   if (process.env.NODE_ENV === undefined) {
-    process.env.NODE_ENV = mode
+    env.NODE_ENV = mode
   }
+
+  return env
+}
+function setNodeEnv (mode, debug) {
+  const env = getNodeEnv(mode, debug)
+
+  Object.keys(env).forEach(key => {
+    process.env[key] = env[key]
+  })
 }
 
-module.exports = setNodeEnv
+module.exports = {
+  getNodeEnv,
+  setNodeEnv,
+}

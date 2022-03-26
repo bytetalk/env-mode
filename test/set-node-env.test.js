@@ -1,7 +1,7 @@
 const { describe, it, beforeEach, afterEach } = require('mocha')
 const { expect } = require('chai')
 const { PORT, clear } = require('./common')
-const setNodeEnv = require('../src')
+const { setNodeEnv } = require('../src')
 
 function setNodeEnvThenExpect (mode) {
   setNodeEnv(mode)

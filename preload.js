@@ -1,6 +1,6 @@
 const { PRELOAD_ARG_KEY_PREFIX } = require('./src/common')
 const parse = require('./src/parse-argv')
-const setNodeEnv = require('./src')
+const { setNodeEnv } = require('./src')
 
 const {
   mode,

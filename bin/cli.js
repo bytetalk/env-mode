@@ -2,7 +2,7 @@
 const { spawn } = require('child_process')
 const { CLI_ARG_KEY_PREFIX, log, format } = require('../src/common')
 const parse = require('../src/parse-argv')
-const setNodeEnv = require('../src')
+const { setNodeEnv } = require('../src')
 
 const {
   mode,
