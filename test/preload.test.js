@@ -14,12 +14,11 @@ function getArgs (mode) {
 }
 function spawnNode (mode, callback) {
   const proc = spawn('node', getArgs(mode), {
-    stdio: [null, null, null, 'ipc'],
+    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
   })
 
   proc.on('message', env => {
     callback(env)
-    proc.disconnect()
   })
   proc.on('error', error => console.error(error))
 }
