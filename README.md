@@ -2,7 +2,7 @@
 
 Set node env from a .env and a .env.mode files.
 
-[![Build Status](https://travis-ci.com/bytetalk/set-node-env.svg?branch=master)](https://travis-ci.com/bytetalk/set-node-env)
+[![Build Status](https://app.travis-ci.com/bytetalk/set-node-env.svg?branch=master)](https://app.travis-ci.com/github/bytetalk/set-node-env)
 
 ## Installation
 
